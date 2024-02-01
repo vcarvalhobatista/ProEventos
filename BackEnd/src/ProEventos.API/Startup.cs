@@ -32,6 +32,7 @@ namespace ProEventos.API
             services.AddDbContext<DataContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
+            services.AddScoped<DataContext>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

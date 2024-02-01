@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ProEventos.API.Data;
 using ProEventos.API.Model;
 
 namespace ProEventos.API.Controllers
@@ -12,6 +15,12 @@ namespace ProEventos.API.Controllers
     [Route("api/[controller]")]
     public class EventoController : ControllerBase
     {
+        readonly DataContext _context;
+
+        public EventoController(DataContext context)
+        {
+            _context = context;
+        }
         public IEnumerable<Evento> _evento = new Evento[]{ 
             new Evento{
                 EventoId= 1, 
@@ -40,28 +49,27 @@ namespace ProEventos.API.Controllers
                 DataEvento=DateTime.Now.AddDays(9).ToString("dd/MM/yyyy"),
                 ImagemURL="foto.png"}
             };
-        public EventoController()
-        {
 
-        }
 
         [HttpGet]
-        public IEnumerable<Evento> Get()
+        public async Task<ActionResult<List<Evento>>> Get()
         {
-            return _evento;
+            return await _context.Eventos.ToListAsync();
         }
 
-        [HttpGet("{id}")]
-        public IEnumerable<Evento> GetByID(int ID)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetByID(int ID)
         {
-            return _evento.Where(x => x.EventoId == ID);
+            await _context.Eventos.FirstOrDefaultAsync(x => x.EventoId == ID);
+            return  Ok();
         }
 
         [HttpPost]
-
-        public string Post()
+        public async Task<ActionResult> Post(Evento evento)
         {
-            return "Exemplo de Post";
+            _context.Eventos.Add(evento);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }
