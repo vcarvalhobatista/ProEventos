@@ -21,36 +21,7 @@ namespace ProEventos.API.Controllers
         {
             _context = context;
         }
-        public IEnumerable<Evento> _evento = new Evento[]{ 
-            new Evento{
-                EventoId= 1, 
-                Tema="Angular e .Net5", 
-                Local="Belo Horizonte", 
-                Lote="1º Lote", 
-                QtdPessoas= 250 , 
-                DataEvento=DateTime.Now.AddDays(2).ToString("dd/MM/yyyy"),
-                ImagemURL="foto.png"},
-
-            new Evento{
-                EventoId= 2, 
-                Tema="SQL Server & .Net Core", 
-                Local="João Pessoa", 
-                Lote="4º Lote", 
-                QtdPessoas= 150 , 
-                DataEvento=DateTime.Now.AddDays(5).ToString("dd/MM/yyyy"),
-                ImagemURL="foto.png"},
-            
-            new Evento{
-                EventoId= 3, 
-                Tema="Angular", 
-                Local="São Paulo", 
-                Lote="2º Lote", 
-                QtdPessoas= 1000 , 
-                DataEvento=DateTime.Now.AddDays(9).ToString("dd/MM/yyyy"),
-                ImagemURL="foto.png"}
-            };
-
-
+        
         [HttpGet]
         public async Task<ActionResult<List<Evento>>> Get()
         {
@@ -68,6 +39,14 @@ namespace ProEventos.API.Controllers
         public async Task<ActionResult> Post(Evento evento)
         {
             _context.Eventos.Add(evento);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Put(Evento evento)
+        {
+            _context.Entry<Evento>(evento).State = EntityState.Modified;                       
             await _context.SaveChangesAsync();
             return Ok();
         }

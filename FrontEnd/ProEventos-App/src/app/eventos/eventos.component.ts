@@ -10,8 +10,8 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class EventosComponent implements OnInit {
   constructor(private http: HttpClient) {}
-
-  public eventos: any;
+  isCollapsed = false;
+  public eventos: any = [];
 
   ngOnInit(): void {
     this.getEventos();
