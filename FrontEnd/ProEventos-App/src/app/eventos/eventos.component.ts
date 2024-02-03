@@ -10,11 +10,18 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class EventosComponent implements OnInit {
   constructor(private http: HttpClient) {}
-  isCollapsed = false;
+  isCollapsed = true;
+  widthImg = 150;
+  marginImg = 2;
+  filtroLista = "";
   public eventos: any = [];
 
   ngOnInit(): void {
     this.getEventos();
+  }
+
+  showImage(){
+    this.isCollapsed = !this.isCollapsed;
   }
 
   public getEventos(): void {

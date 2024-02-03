@@ -1,19 +1,20 @@
 <h2>Eventos</h2>
 <hr>
 
-<form action="" class="form-inline">
-    <div class="form-group mb-2">        
-        <input type="text" class="form-control mr-2" placeholder="buscar">
-        <button class="btn btn-outline-success">Buscar</button>        
-    </div>
-</form>
-
-<!-- table.table.table-striped>(thead.thead-dark>tr>th*8) -->
+<div class="d-flex">    
+        <input type="search" 
+        class=" form-control me-2 col-md-2"
+        [(ngModel)]="filtroLista"
+        placeholder="Buscar">
+        <button class="btn btn-outline-dark btn-sm" type="submit">Buscar</button>        
+</div>
+<h3>Filtro: {{filtroLista}}</h3>
 <table class="table table-striped">
-    <thead class="thead-dark">
+    <thead class="table-dark text-center">
         <tr>
+            <th><button type="button" class="btn btn-outline-light btn-sm" 
+                (click)="showImage()">{{!isCollapsed ? "Mostrar" : "Ocultar"}}</button></th>
             <th>#</th>
-            <th><button type="button" class="btn btn-primary btn-sm" (click)="isCollapsed = !isCollapsed">Imagem</button></th>
             <th> Tema</th>
             <th>Local</th>
             <th>Data</th>
@@ -24,10 +25,13 @@
     </thead>
     <tbody>        
             <tr *ngFor="let evento of eventos">
-                <td>{{evento.eventoId}}</td>                
                 <td id="imgagem" >
-                    <img [collapse]="isCollapsed" src="/assets/{{evento.imagemURL}}" style="width: 50px; margin: 2px;">
+                    <img [collapse]="!isCollapsed" [isAnimated]="true" src="/assets/{{evento.imagemURL}}" 
+                    [style.width.px]="widthImg"
+                    [style.margin.px]="marginImg">
+                    <!-- <img [collapse]="isCollapsed" src="/assets/{{evento.imagemURL}}" style="width: 50px; margin: 2px;"> -->
                 </td>   
+                <td>{{evento.eventoId}}</td>                
                 <td>{{evento.tema}}</td>
                 <td>{{evento.local}}</td>
                 <td>{{evento.dataEvento}}</td>
