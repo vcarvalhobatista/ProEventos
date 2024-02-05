@@ -2,13 +2,13 @@
 <hr>
 
 <div class="d-flex">    
+        <label class="mr-2">Filtro: </label>
         <input type="search" 
         class=" form-control me-2 col-md-2"
         [(ngModel)]="filtroLista"
-        placeholder="Buscar">
-        <button class="btn btn-outline-dark btn-sm" type="submit">Buscar</button>        
+        placeholder="Buscar">        
 </div>
-<h3>Filtro: {{filtroLista}}</h3>
+<!-- <h3>Filtro: {{filtroLista}}</h3> código mantigo por referência-->
 <table class="table table-striped">
     <thead class="table-dark text-center">
         <tr>
@@ -24,7 +24,7 @@
         </tr>
     </thead>
     <tbody>        
-            <tr *ngFor="let evento of eventos">
+            <tr *ngFor="let evento of eventosFiltrados">
                 <td id="imgagem" >
                     <img [collapse]="!isCollapsed" [isAnimated]="true" src="/assets/{{evento.imagemURL}}" 
                     [style.width.px]="widthImg"
@@ -37,7 +37,10 @@
                 <td>{{evento.dataEvento}}</td>
                 <td>{{evento.qtdPessoas}}</td>
                 <td>{{evento.lote}}</td>
-                <td>opcao</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm mr-2">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+                </td>
             </tr>        
     </tbody>
     <tfoot *ngIf="!eventos.length">
