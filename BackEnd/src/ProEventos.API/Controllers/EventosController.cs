@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProEventos.API.Data;
-using ProEventos.API.Model;
+using ProEventos.Domain;
+using ProEventos.Persistence;
 
 namespace ProEventos.API.Controllers
 {
@@ -15,9 +15,9 @@ namespace ProEventos.API.Controllers
     [Route("api/[controller]")]
     public class EventosController : ControllerBase
     {
-        readonly DataContext _context;
+        readonly ProEventosContext _context;
 
-        public EventosController(DataContext context)
+        public EventosController(ProEventosContext context)
         {
             _context = context;
         }

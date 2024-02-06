@@ -8,5 +8,10 @@
   <ItemGroup>
     <ProjectReference Include="..\ProEventos.Domain\ProEventos.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">     
+    </PackageReference>
+  </ItemGroup>
 
 </Project>
