@@ -50,7 +50,8 @@ export class EventosComponent implements OnInit {
   }
 
   public getEventos(): void {
-    this.http.get<any[]>('https://localhost:5001/api/Eventos')
+    // this.http.get<any[]>('https://localhost:5001/api/Eventos')
+    this.http.get<any[]>('https://pokeapi.co/api/v2/pokemon')
       .pipe(
         map(response => {
           this.eventos = response;
