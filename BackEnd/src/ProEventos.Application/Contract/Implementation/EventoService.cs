@@ -69,10 +69,10 @@ namespace ProEventos.Application.Contract.Implementation
                 
                 return await _repository.SaveChangesAsync();
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
                 
-                throw;
+                throw new Exception("Não foi possível excluir o evento.", ex.InnerException);
             }
         }
 
