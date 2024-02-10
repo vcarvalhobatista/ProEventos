@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using ProEventos.Contract.Persistence;
 using ProEventos.Domain;
 using ProEventos.Persistence;
+using ProEventos.Persistence.Context;
 
 namespace ProEventos.Implementation.Persistence
 {
@@ -26,6 +29,7 @@ namespace ProEventos.Implementation.Persistence
 
         public void Delete<T>(T entity) where T : class
         {
+            _context.Entry<T>(entity).State = EntityState.Deleted; 
             _context.Remove(entity);
         }
 

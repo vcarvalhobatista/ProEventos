@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProEventos.Domain;
 using ProEventos.Persistence;
+using ProEventos.Persistence.Context;
 
 namespace ProEventos.API.Controllers
 {
