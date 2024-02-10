@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using ProEventos.Contract.Persistence;
 using ProEventos.Domain;
@@ -39,15 +40,22 @@ namespace ProEventos.Application.Contract.Implementation
         public async Task<Evento> UpdateEvento(int eventoId, Evento model)
         {
             try
-            {                
+            {   
+                if(model.EventoId != eventoId) return null;
+
+                var evento = await _eventoRepository.GetAllEventosByIdAsync(eventoId, false);
+                if (evento == null) return null;
+
                 _repository.Update(model);
-                await _repository.SaveChangesAsync();
+
+                if(await _repository.SaveChangesAsync())
                 return await _eventoRepository.GetAllEventosByIdAsync(eventoId);
+
+                return null;
             }
-            catch (System.Exception)
-            {
-                
-                throw;
+            catch (Exception ex)
+            {                
+                throw new Exception(ex.Message);
             }
         }
 
@@ -55,7 +63,9 @@ namespace ProEventos.Application.Contract.Implementation
         {
              try
             {
-                _repository.Delete(_eventoRepository.GetAllEventosByIdAsync(eventoId, false));                
+                var evento = await _eventoRepository.GetAllEventosByIdAsync(eventoId, false) ?? throw new Exception("Evento não encontrado para ser deletado.");
+
+                _repository.Delete(evento);                
                 
                 return await _repository.SaveChangesAsync();
             }
@@ -72,10 +82,10 @@ namespace ProEventos.Application.Contract.Implementation
             {                
                 return await _eventoRepository.GetAllEventosAsync(includePalestrantes);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
                 
-                throw;
+                throw new Exception("Não foi possível buscar os Eventos.", ex.InnerException);
             }
         }
 
@@ -83,12 +93,11 @@ namespace ProEventos.Application.Contract.Implementation
         {
             try
             {                
-                return await _eventoRepository.GetAllEventosByIdAsync(eventoId ,includePalestrantes);
+                return await _eventoRepository.GetAllEventosByIdAsync(eventoId ,includePalestrantes) ?? throw new Exception("Evento não encontrado.");
             }
-            catch (System.Exception)
-            {
-                
-                throw;
+            catch (System.Exception ex)
+            {                
+                throw new Exception("Houve falha na busca do Evento.", ex.InnerException);
             }
         }
 
@@ -96,12 +105,11 @@ namespace ProEventos.Application.Contract.Implementation
         {
             try
             {                
-                return await _eventoRepository.GetAllEventosByTemaAsync(tema ,includePalestrantes);
+               return await _eventoRepository.GetAllEventosByTemaAsync(tema ,includePalestrantes) ?? throw new Exception("Eventos não encontrados.");
             }
-            catch (System.Exception)
-            {
-                
-                throw;
+            catch (System.Exception ex)
+            {                
+                throw new Exception("Houve falha na busca dos Eventos.", ex.InnerException);
             }
         }        
     }
