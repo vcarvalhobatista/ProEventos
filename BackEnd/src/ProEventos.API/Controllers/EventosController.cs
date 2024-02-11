@@ -26,39 +26,39 @@ namespace ProEventos.API.Controllers
         {
             _context = context;
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Evento>>> Get()
-        {   
-            return Ok(new {eventos = await _context.GetAllEventosAsync(true)});
+        {
+            return Ok(new { eventos = await _context.GetAllEventosAsync(true) });
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult> GetByID(int ID)
         {
             var evento = await _context.GetAllEventosByIdAsync(ID, true);
-            if (evento == null) return BadRequest(new {message = "Evento não encontrado."});            
-            
-            return  Ok();
+            if (evento == null) return BadRequest(new { message = "Evento não encontrado." });
+
+            return Ok();
         }
 
         [HttpPost]
         public async Task<ActionResult> Post(Evento novoEvento)
         {
             var eventoAdded = _context.AddEvento(novoEvento);
-            if(eventoAdded == null) return BadRequest();
-            
-            return Created("", new {message = "Evento criado com sucesso.", evento = eventoAdded});
+            if (eventoAdded == null) return BadRequest();
+
+            return Created("", new { message = "Evento criado com sucesso.", evento = eventoAdded });
         }
 
         [HttpPut("{eventoId:int}")]
-        public async Task<ActionResult> Put(int eventoId,Evento evento)
+        public async Task<ActionResult> Put(int eventoId, Evento evento)
         {
-            if (eventoId != evento.EventoId) return BadRequest(new { message = "Evento não encontrado."});
-            
+            if (eventoId != evento.EventoId) return BadRequest(new { message = "Evento não encontrado." });
+
             var eventoUpdated = await _context.UpdateEvento(eventoId, evento);
-            
-            return Ok   (new {evento = eventoUpdated});
+
+            return Ok(new { evento = eventoUpdated });
         }
 
         [HttpDelete("{eventoId:int}")]
@@ -66,8 +66,8 @@ namespace ProEventos.API.Controllers
         {
             var eventoDeleted = await _context.DeleteEventos(eventoId);
 
-            if (!eventoDeleted) return BadRequest(new { message = "Não foi possível excluir o evento."});
-            
+            if (!eventoDeleted) return BadRequest(new { message = "Não foi possível excluir o evento." });
+
             return Ok();
         }
     }

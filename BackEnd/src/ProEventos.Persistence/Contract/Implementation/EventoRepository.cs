@@ -11,7 +11,7 @@ namespace ProEventos.Persistence.Contract.Implementation
         public EventoRepository(ProEventosContext context)
         {
             _context = context;
-            
+
         }
         public async Task<Evento[]> GetAllEventosAsync(bool includePalestrantes = false)
         {
@@ -63,6 +63,6 @@ namespace ProEventos.Persistence.Contract.Implementation
                                         .Where(e => e.EventoId == eventoId);
 
             return await queryReturned.FirstOrDefaultAsync();
-        }       
+        }
     }
 }

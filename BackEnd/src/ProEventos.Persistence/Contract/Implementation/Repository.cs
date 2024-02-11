@@ -29,7 +29,7 @@ namespace ProEventos.Implementation.Persistence
 
         public void Delete<T>(T entity) where T : class
         {
-            _context.Entry<T>(entity).State = EntityState.Deleted; 
+            _context.Entry<T>(entity).State = EntityState.Deleted;
             _context.Remove(entity);
         }
 

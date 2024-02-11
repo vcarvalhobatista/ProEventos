@@ -11,7 +11,7 @@ namespace ProEventos.Persistence.Context
     {
         public ProEventosContext(DbContextOptions<ProEventosContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Evento> Eventos { get; set; }
@@ -28,7 +28,7 @@ namespace ProEventos.Persistence.Context
         {
             //Associação de Many to Many
             modelBuilder.Entity<PalestranteEvento>()
-            .HasKey(PE => new {PE.EventoId, PE.PalestranteId});
+            .HasKey(PE => new { PE.EventoId, PE.PalestranteId });
         }
     }
 }
