@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Logging;
 using ProEventos.Application.Contract;
 using ProEventos.Domain;
@@ -48,7 +49,7 @@ namespace ProEventos.API.Controllers
             var eventoAdded = _context.AddEvento(novoEvento);
             if (eventoAdded == null) return BadRequest();
 
-            return Created("", new { message = "Evento criado com sucesso.", evento = eventoAdded });
+            return Created(nameof(Post), new { message = "Evento criado com sucesso.", evento = eventoAdded });
         }
 
         [HttpPut("{eventoId:int}")]
