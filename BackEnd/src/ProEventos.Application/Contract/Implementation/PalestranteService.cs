@@ -27,6 +27,20 @@ namespace ProEventos.Application.Contract.Implementation
             return await _palestranteRepository.GetAllPalestrantesByIdAsync(model.Id, false);
         }
 
+        public async Task<Palestrante> UpdatePalestrante(int palestranteId, Palestrante model)
+        {
+            var palestrante = _palestranteRepository.GetAllPalestrantesByIdAsync(palestranteId , false)  ?? throw new Exception("Palestrante não encontrado para ser deletado.");
+            if (palestrante == null)
+                return null;
+
+            _repository.Update(palestrante);
+            
+            if(await _repository.SaveChangesAsync())
+                return await _palestranteRepository.GetAllPalestrantesByIdAsync(palestranteId, false);
+
+            return null;
+        }
+
         public async Task<bool> DeletePalestrantes(int palestranteId)
         {
             var palestrante = _palestranteRepository.GetAllPalestrantesByIdAsync(palestranteId , false)  ?? throw new Exception("Palestrante não encontrado para ser deletado.");
@@ -37,24 +51,22 @@ namespace ProEventos.Application.Contract.Implementation
             return await _repository.SaveChangesAsync();
         }
 
-        public Task<Palestrante[]> GetAllPalestrantesAsync(bool includeEventos)
+        public async Task<Palestrante[]> GetAllPalestrantesAsync(bool includeEventos)
         {
-            throw new NotImplementedException();
+            return  await _palestranteRepository.GetAllPalestrantesAsync(includeEventos) 
+                                ?? throw new Exception("Não há palestrantes.");            
         }
 
-        public Task<Palestrante> GetAllPalestrantesByIdAsync(int palestranteId, bool includeEventos)
-        {
-            throw new NotImplementedException();
+        public async Task<Palestrante> GetAllPalestrantesByIdAsync(int palestranteId, bool includeEventos)
+        {            
+            return await _palestranteRepository.GetAllPalestrantesByIdAsync(palestranteId, includeEventos) 
+                        ?? throw new Exception("Palestrante não encontrado.");
         }
 
-        public Task<Palestrante[]> GetAllPalestrantesByNomeAsync(string nome, bool includeEventos)
+        public async Task<Palestrante[]> GetAllPalestrantesByNomeAsync(string nome, bool includeEventos)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Palestrante> UpdatePalestrante(int palestranteId, Palestrante model)
-        {
-            throw new NotImplementedException();
-        }
+            return await _palestranteRepository.GetAllPalestrantesByNomeAsync(nome, includeEventos) 
+                        ?? throw new Exception("Palestrantes não encontrados.");
+        }        
     }
 }
