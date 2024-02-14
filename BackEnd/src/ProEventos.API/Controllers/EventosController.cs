@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -31,23 +33,38 @@ namespace ProEventos.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Evento>>> Get()
         {
-            return Ok(new { eventos = await _context.GetAllEventosAsync(true) });
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                // Outras configurações, se necessário
+            };
+
+            // Serialização do objeto
+            var listaEventos = await _context.GetAllEventosAsync(true);
+            
+            return Ok(JsonSerializer.Serialize(listaEventos, options));
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult> GetByID(int ID)
+        public async Task<ActionResult<Evento>> GetByID(int ID)
         {
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                // Outras configurações, se necessário
+            };
+
             var evento = await _context.GetAllEventosByIdAsync(ID, true);
             if (evento == null) return BadRequest(new { message = "Evento não encontrado." });
 
-            return Ok();
+            return Ok(JsonSerializer.Serialize(evento, options));
         }
 
         [HttpPost]
         public async Task<ActionResult> Post(Evento novoEvento)
         {
             var eventoAdded = _context.AddEvento(novoEvento);
-            if (eventoAdded == null) return BadRequest();
+            if (eventoAdded == null) return BadRequest(new {message = "Falha ao criar novo Evento."});
 
             return Created(nameof(Post), new { message = "Evento criado com sucesso.", evento = eventoAdded });
         }

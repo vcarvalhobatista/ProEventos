@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+
 #nullable disable
 
 namespace ProEventos.Persistence.Migrations

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +8,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ProEventos.Application.Contract;
 using ProEventos.Application.Contract.Implementation;
+using ProEventos.Contract.Persistence;
+using ProEventos.Implementation.Persistence;
 using ProEventos.Persistence.Context;
+using ProEventos.Persistence.Contract;
+using ProEventos.Persistence.Contract.Implementation;
 
 namespace ProEventos.API
 {
@@ -28,6 +33,11 @@ namespace ProEventos.API
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
             services.AddScoped<IEventoService,EventoService>();
+            services.AddScoped<IEventoRepository,EventoRepository>();
+            services.AddScoped(typeof(IRepository<>) , typeof(Repository<>));
+            services.AddScoped<IPalestranteService, PalestranteService>();
+            services.AddScoped<IPalestranteRepository, PalestranteRepository>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
