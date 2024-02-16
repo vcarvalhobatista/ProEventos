@@ -30,9 +30,11 @@ namespace ProEventos.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<ProEventosContext>(
-                context => context.UseSqlite(Configuration.GetConnectionString("Default"))
-            );
+            // services.AddDbContext<ProEventosContext>(
+            //     context => context.UseSqlite(Configuration.GetConnectionString("Default"))
+            // );
+            services.AddDbContext<ProEventosContext>(opt => opt.UseInMemoryDatabase("Default"));
+
             services.AddScoped<IEventoService,EventoService>();
             services.AddScoped<IEventoRepository,EventoRepository>();
             services.AddScoped(typeof(IRepository<>) , typeof(Repository<>));

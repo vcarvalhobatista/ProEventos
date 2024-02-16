@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using ProEventos.Contract.Persistence;
 using ProEventos.Domain;
 using ProEventos.Persistence.Contract;
@@ -45,6 +38,8 @@ namespace ProEventos.Application.Contract.Implementation
 
                 var evento = await _eventoRepository.GetAllEventosByIdAsync(eventoId, false);
                 if (evento == null) return null;
+
+                model.EventoId = eventoId;
 
                 _repository.Update(model);
 

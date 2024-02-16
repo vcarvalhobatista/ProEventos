@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProEventos.Domain
 {
     public class Evento    
-{
+    {
         public int EventoId { get; set; }
 
         public string Local { get; set; }
@@ -19,13 +17,15 @@ namespace ProEventos.Domain
 
         public string ImagemURL { get; set; }
 
+        public string Telefone {get; set;}
+
         public string Email { get; set; }
 
-        public IEnumerable<Lote>? Lote { get; set; }
+        public List<Lote>? Lotes { get; set; }
 
-        public IEnumerable<RedeSocial>? RedesSociais { get; set; }
+        public List<RedeSocial>? RedesSociais { get; set; }
 
-        public IEnumerable<PalestranteEvento>? PalestrantesEventos { get; set; }
+        public List<PalestranteEvento>? PalestrantesEventos { get; set; }
     }
 
 }

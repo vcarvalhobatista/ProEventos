@@ -1,7 +1,5 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
-
 
 #nullable disable
 
@@ -41,17 +39,13 @@ namespace ProEventos.Persistence.Migrations
                     Tema = table.Column<string>(type: "TEXT", nullable: false),
                     QtdPessoas = table.Column<int>(type: "INTEGER", nullable: false),
                     ImagemURL = table.Column<string>(type: "TEXT", nullable: false),
+                    Telefone = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     PalestranteId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Eventos", x => x.EventoId);
-                    table.ForeignKey(
-                        name: "FK_Eventos_Palestrantes_PalestranteId",
-                        column: x => x.PalestranteId,
-                        principalTable: "Palestrantes",
-                        principalColumn: "Id");
+                    table.PrimaryKey("PK_Eventos", x => x.EventoId);                    
                 });
 
             migrationBuilder.CreateTable(

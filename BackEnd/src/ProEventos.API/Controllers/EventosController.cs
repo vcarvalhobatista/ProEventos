@@ -38,7 +38,7 @@ namespace ProEventos.API.Controllers
             return Ok(listaEventos);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{ID:int}")]
         public async Task<ActionResult<Evento>> GetByID(int ID)
         {
             var evento = await _context.GetAllEventosByIdAsync(ID, true);
