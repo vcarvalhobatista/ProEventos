@@ -64,6 +64,8 @@ namespace ProEventos.Persistence.Contract.Implementation
             queryReturned = queryReturned.AsNoTracking().OrderBy(x => x.EventoId)
                                         .Where(e => e.EventoId == eventoId);
 
+            if (!queryReturned.Any()) return null;
+
             return await queryReturned.FirstOrDefaultAsync();
         }
     }

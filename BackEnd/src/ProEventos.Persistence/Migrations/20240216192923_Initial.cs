@@ -45,7 +45,12 @@ namespace ProEventos.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Eventos", x => x.EventoId);                    
+                    table.PrimaryKey("PK_Eventos", x => x.EventoId);
+                    table.ForeignKey(
+                        name: "FK_Eventos_Palestrantes_PalestranteId",
+                        column: x => x.PalestranteId,
+                        principalTable: "Palestrantes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -59,7 +64,7 @@ namespace ProEventos.Persistence.Migrations
                     DataInicio = table.Column<DateTime>(type: "TEXT", nullable: true),
                     DataFim = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Quantidade = table.Column<int>(type: "INTEGER", nullable: false),
-                    EventoId = table.Column<int>(type: "INTEGER", nullable: true)
+                    EventoId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +73,8 @@ namespace ProEventos.Persistence.Migrations
                         name: "FK_Lotes_Eventos_EventoId",
                         column: x => x.EventoId,
                         principalTable: "Eventos",
-                        principalColumn: "EventoId");
+                        principalColumn: "EventoId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,12 +119,14 @@ namespace ProEventos.Persistence.Migrations
                         name: "FK_RedeSocials_Eventos_EventoId",
                         column: x => x.EventoId,
                         principalTable: "Eventos",
-                        principalColumn: "EventoId");
+                        principalColumn: "EventoId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RedeSocials_Palestrantes_PalestranteId",
                         column: x => x.PalestranteId,
                         principalTable: "Palestrantes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

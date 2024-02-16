@@ -32,7 +32,7 @@ namespace ProEventos.API.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Evento>>> Get()
-        {   
+        {
             var listaEventos = await _context.GetAllEventosAsync(true);
 
             return Ok(listaEventos);
@@ -41,17 +41,25 @@ namespace ProEventos.API.Controllers
         [HttpGet("{ID:int}")]
         public async Task<ActionResult<Evento>> GetByID(int ID)
         {
-            var evento = await _context.GetAllEventosByIdAsync(ID, true);
-            if (evento == null) return BadRequest(new { message = "Evento não encontrado." });
+            try
+            {
+                var evento = await _context.GetAllEventosByIdAsync(ID, true);
+                if (evento == null) return BadRequest(new { message = "Evento não encontrado." });
 
-            return Ok(evento);
+                return Ok(evento);
+            }
+            catch (System.Exception)
+            {
+                return BadRequest(new { message = "Evento não encontrado." });
+            }
+
         }
 
         [HttpPost]
         public async Task<ActionResult> Post(Evento novoEvento)
         {
             var eventoAdded = await _context.AddEvento(novoEvento);
-            if (eventoAdded == null) return BadRequest(new {message = "Falha ao criar novo Evento."});
+            if (eventoAdded == null) return BadRequest(new { message = "Falha ao criar novo Evento." });
 
             return Created(nameof(Post), new { message = "Evento criado com sucesso.", evento = eventoAdded });
         }
@@ -69,11 +77,18 @@ namespace ProEventos.API.Controllers
         [HttpDelete("{eventoId:int}")]
         public async Task<ActionResult> Delete(int eventoId)
         {
-            var eventoDeleted = await _context.DeleteEventos(eventoId);
+            try
+            {
+                var eventoDeleted = await _context.DeleteEventos(eventoId);
 
-            if (!eventoDeleted) return BadRequest(new { message = "Não foi possível excluir o evento." });
+                if (!eventoDeleted) return BadRequest(new { message = "Evento não existe." });
 
-            return Ok();
+                return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { message = "Não foi possível excluir o evento.", error = ex.HResult });
+            }
         }
     }
 }

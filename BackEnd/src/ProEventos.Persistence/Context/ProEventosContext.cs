@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using ProEventos.Domain;
 
 namespace ProEventos.Persistence.Context
@@ -25,6 +26,16 @@ namespace ProEventos.Persistence.Context
             //Associação de Many to Many
             modelBuilder.Entity<PalestranteEvento>()
             .HasKey(PE => new { PE.EventoId, PE.PalestranteId });
+
+            modelBuilder.Entity<Evento>()
+            .HasMany(evento => evento.RedesSociais)
+            .WithOne(redeSocial => redeSocial.Evento)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Palestrante>()
+            .HasMany(palestrante => palestrante.RedesSociais)
+            .WithOne(redeSocial => redeSocial.Palestrante)
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 using ProEventos.Contract.Persistence;
 using ProEventos.Domain;
 using ProEventos.Persistence.Contract;
@@ -58,16 +60,16 @@ namespace ProEventos.Application.Contract.Implementation
         {
             try
             {
-                var evento = await _eventoRepository.GetAllEventosByIdAsync(eventoId, false) ?? throw new Exception("Evento não encontrado para ser deletado.");
+                var evento = await _eventoRepository.GetAllEventosByIdAsync(eventoId, false);
 
+                if(evento == null) return false;
                 _repository.Delete(evento);
 
                 return await _repository.SaveChangesAsync();
             }
             catch (System.Exception ex)
             {
-
-                throw new Exception("Não foi possível excluir o evento.", ex.InnerException);
+                throw new Exception(ex.Message);
             }
         }
 
