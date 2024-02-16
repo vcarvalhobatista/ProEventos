@@ -82,15 +82,19 @@ namespace ProEventos.Application.Contract.Implementation
             catch (System.Exception ex)
             {
 
-                throw new Exception("Não foi possível buscar os Eventos.", ex.InnerException);
+                throw new Exception("Não foi possível buscar os Eventos.");
             }
         }
 
         public async Task<Evento> GetAllEventosByIdAsync(int eventoId, bool includePalestrantes = false)
         {
             try
-            {
-                return await _eventoRepository.GetAllEventosByIdAsync(eventoId, includePalestrantes) ?? throw new Exception("Evento não encontrado.");
+            {                
+                var evento = await _eventoRepository.GetAllEventosByIdAsync(eventoId, includePalestrantes);
+
+                if(evento == null) return null;
+
+                return evento;
             }
             catch (System.Exception ex)
             {
