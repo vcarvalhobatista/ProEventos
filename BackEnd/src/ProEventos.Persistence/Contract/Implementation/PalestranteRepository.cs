@@ -15,47 +15,47 @@ namespace ProEventos.Persistence.Contract.Implementation
         public async Task<Palestrante[]> GetAllPalestrantesAsync(bool includeEventos = false)
         {
             IQueryable<Palestrante> queryReturned = _context.Palestrantes
-                        .Include(x => x.Eventos);
+                                                    .Include(r => r.RedesSociais);
 
             if (includeEventos)
             {
                 queryReturned = queryReturned.Include(p => p.PalestrantesEventos)
-                                        .ThenInclude(pa => pa.Palestrante);
+                                        .ThenInclude(pe => pe.Evento);
             }
 
             queryReturned = queryReturned.OrderBy(p => p.Id);
 
             return await queryReturned.AsNoTracking()
-                                .ToArrayAsync();
+                                        .ToArrayAsync();
         }
 
         public async Task<Palestrante> GetAllPalestrantesByIdAsync(int palestranteId, bool includeEventos = false)
         {
             IQueryable<Palestrante> queryReturned = _context.Palestrantes
-                        .Include(x => x.Eventos);
+                                                    .Include(x => x.RedesSociais);
 
             if (includeEventos)
             {
                 queryReturned = queryReturned.Include(p => p.PalestrantesEventos)
-                                            .ThenInclude(pa => pa.Palestrante).AsNoTracking();
+                                            .ThenInclude(pe => pe.Evento).AsNoTracking();
             }
 
             queryReturned = queryReturned.OrderBy(p => p.Id)
                                          .Where(p => p.Id == palestranteId);
 
             return await queryReturned.AsNoTracking()
-                                    .FirstOrDefaultAsync();
+                                      .FirstOrDefaultAsync();
         }
 
         public async Task<Palestrante[]> GetAllPalestrantesByNomeAsync(string nome, bool includeEventos = false)
         {
             IQueryable<Palestrante> queryReturned = _context.Palestrantes
-                        .Include(x => x.Eventos);
+                        .Include(x => x.RedesSociais);
 
             if (includeEventos)
             {
                 queryReturned = queryReturned.Include(p => p.PalestrantesEventos)
-                                        .ThenInclude(pa => pa.Palestrante);
+                                              .ThenInclude(pa => pa.Evento);
             }
 
             queryReturned = queryReturned.OrderBy(p => p.Id)

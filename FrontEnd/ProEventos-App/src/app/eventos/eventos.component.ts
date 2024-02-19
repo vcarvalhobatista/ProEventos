@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { EventoService } from '../services/evento.service';
 import { Evento } from '../models/Evento';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-eventos',
@@ -12,7 +14,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   // ,providers: [EventoService]
 })
 export class EventosComponent implements OnInit {
-  modalRef : BsModalRef;
+  
   
   public isCollapsed = true;
   public widthImg = 150;
@@ -20,7 +22,27 @@ export class EventosComponent implements OnInit {
   private _filtroLista = "";
   public eventos: Evento[] = [];
   public eventosFiltrados : Evento[] = [];
+  public modalRef : any;
+  public message?: string;
+    
+  constructor(private eventoService : EventoService, 
+              private modalService: BsModalService,
+              private toastr: ToastrService,
+              private spinner: NgxSpinnerService) {}
   
+  openModal(template: TemplateRef<void>) : void{
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+  
+  confirm(): void {    
+    this.toastr.success('Evento deletado com Sucesso.', 'Deletado!');
+    this.modalRef?.hide();
+  }
+  
+  decline(): void {    
+    this.modalRef?.hide();
+  }
+
   public get filtroLista() {
     return this._filtroLista;
   }
@@ -42,10 +64,11 @@ export class EventosComponent implements OnInit {
       );
     }
     
-  constructor(private eventoService : EventoService) {}
   
   public ngOnInit(): void {
+    
     this.getEventos();
+    
   }
 
   public showImage(){
@@ -53,6 +76,7 @@ export class EventosComponent implements OnInit {
   }
 
   public getEventos(): void {
+    this.spinner.show();
     this.eventoService.getEventos()
       .pipe(
         map((_eventos: Evento[]) => {
@@ -61,9 +85,16 @@ export class EventosComponent implements OnInit {
         }),
         catchError(error => {
           console.error(error);
+          this.toastr.error('Erro ao carregar os Eventos', 'Erro!');
+          this.spinner.hide();
           return of([]); // ou qualquer valor padrão desejado
-        })
+        })                
       )
       .subscribe();
+      
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+      }, 1500);
   }
 }
