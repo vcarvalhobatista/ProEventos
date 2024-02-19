@@ -1,21 +1,40 @@
 
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">ProEventos</a>
-    <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">ProEventos</a>
+  <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+    <span class="navbar-toggler-icon"></span>
+  </button>
   
-    <div class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true" id="conteudoNavbarSuportado">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Eventos <span class="sr-only">(página atual)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Palestrantes</a>
-        </li>         
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contatos</a>
-        </li>
-      </ul>      
-    </div>
-  </nav>
+
+  <div class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true" id="conteudoNavbarSuportado">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Vinícius
+        </a>
+        <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">
+            Perfil
+          </a>
+          <div role="separator" class="divider"></div>
+          <a class="dropdown-item" href="#">
+            Sair
+          </a>
+        </div>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Eventos <span class="sr-only">(página atual)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Palestrantes</a>
+      </li>         
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contatos</a>
+      </li>
+    </ul>      
+  </div>
+</nav>

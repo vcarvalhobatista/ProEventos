@@ -52,7 +52,22 @@ namespace ProEventos.API.Controllers
             {
                 return BadRequest(new { message = "Evento não encontrado." });
             }
+        }
 
+        [HttpGet("{tema:string}/tema")]
+        public async Task<ActionResult<Evento>> GetByID(string tema)
+        {
+            try
+            {
+                var evento = await _context.GetAllEventosByTemaAsync(tema, true);
+                if (evento == null) return BadRequest(new { message = "Evento não encontrado." });
+
+                return Ok(evento);
+            }
+            catch (System.Exception)
+            {
+                return BadRequest(new { message = "Evento não encontrado." });
+            }
         }
 
         [HttpPost]

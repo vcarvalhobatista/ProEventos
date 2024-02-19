@@ -1,60 +1,62 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { EventoService } from '../services/evento.service';
+import { Evento } from '../models/Evento';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-eventos',
   templateUrl: './eventos.component.html',
   styleUrls: ['./eventos.component.css']
+  // ,providers: [EventoService]
 })
 export class EventosComponent implements OnInit {
-
+  modalRef : BsModalRef;
   
-  isCollapsed = true;
-  widthImg = 150;
-  marginImg = 2;
+  public isCollapsed = true;
+  public widthImg = 150;
+  public marginImg = 2;
   private _filtroLista = "";
-  public eventos: any = [];
-  public eventosFiltrados : any = [];
+  public eventos: Evento[] = [];
+  public eventosFiltrados : Evento[] = [];
   
-  public get filtroLista(){
+  public get filtroLista() {
     return this._filtroLista;
   }
   
   public set filtroLista(value : string){
     this._filtroLista = value;
-    this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this._filtroLista) : this.eventos
+    this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this._filtroLista) : this.eventos;
   }
   
-  filtrarEventos(filtrarPor : string) : any
+  public filtrarEventos(filtrarPor : string) : any
   {
     filtrarPor = filtrarPor.toLowerCase();
     
     return this.eventos.filter(
-      (evento : any) => evento.tema.toLowerCase().indexOf(filtrarPor) !== -1 || 
+      (evento : Evento) => evento.tema.toLowerCase().indexOf(filtrarPor) !== -1 || 
       evento.local.toLowerCase().indexOf(filtrarPor) !== -1
       // ,
       // console.log(filtrarPor)
-      )
+      );
     }
     
-  constructor(private http: HttpClient) {}
+  constructor(private eventoService : EventoService) {}
   
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getEventos();
   }
 
-  showImage(){
+  public showImage(){
     this.isCollapsed = !this.isCollapsed;
   }
 
   public getEventos(): void {
-    this.http.get<any[]>('https://localhost:5001/api/Eventos')
-    // this.http.get<any[]>('https://pokeapi.co/api/v2/pokemon')
+    this.eventoService.getEventos()
       .pipe(
-        map(response => {
-          this.eventos = response;
+        map((_eventos: Evento[]) => {
+          this.eventos = _eventos;
           this.eventosFiltrados = this.eventos;
         }),
         catchError(error => {
