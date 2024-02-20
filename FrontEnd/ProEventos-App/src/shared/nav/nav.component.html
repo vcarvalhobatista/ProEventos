@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">ProEventos</a>
+  <a class="navbar-brand" routerLink="dashboard">ProEventos</a>
   <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,12 +9,12 @@
   <div class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true" id="conteudoNavbarSuportado">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown" dropdown>
-        <a dropdownToggle class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+        <a dropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdownMenuLink" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Vinícius
         </a>
         <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">
+          <a class="dropdown-item" routerLink="profile">
             Perfil
           </a>
           <div role="separator" class="divider"></div>
@@ -25,15 +25,15 @@
       </li>
     </ul>
 
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Eventos <span class="sr-only">(página atual)</span></a>
+        <a class="nav-link" routerLink="eventos" routerLinkActive="active">Eventos <span class="sr-only">(página atual)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Palestrantes</a>
+        <a class="nav-link" routerLink="palestrantes" routerLinkActive="active">Palestrantes</a>
       </li>         
       <li class="nav-item">
-        <a class="nav-link" href="#">Contatos</a>
+        <a class="nav-link" routerLink="contatos" routerLinkActive="active">Contatos</a>
       </li>
     </ul>      
   </div>

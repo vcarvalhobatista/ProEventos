@@ -1,11 +1,14 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { EventoService } from '../services/evento.service';
-import { Evento } from '../models/Evento';
+import { EventoService } from '../../services/evento.service';
+import { Evento } from '../../models/Evento';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgModel } from '@angular/forms';
+import { TitleComponent } from 'src/shared/title/title.component';
+
 
 @Component({
   selector: 'app-eventos',
@@ -14,8 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   // ,providers: [EventoService]
 })
 export class EventosComponent implements OnInit {
-  
-  
+
   public isCollapsed = true;
   public widthImg = 150;
   public marginImg = 2;
@@ -91,7 +93,7 @@ export class EventosComponent implements OnInit {
         })                
       )
       .subscribe();
-      
+
       setTimeout(() => {
         /** spinner ends after 5 seconds */
         this.spinner.hide();
