@@ -2,13 +2,21 @@
 <hr>
 <app-title></app-title>
 
-<div class="d-flex">    
-        <label class="mr-2">Filtro: </label>
-        <input type="search" 
-        class=" form-control me-2 col-md-2"
-        [(ngModel)]="filtroLista"
-        placeholder="Buscar">        
+<div class="d-flex">
+    <div class="flex-fill pr-3">
+      <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Filtro: </div>
+            </div>
+            <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="filtroLista"
+            placeholder="Filtrar por Tema e Local">
+      </div>
+    </div>
 </div>
+
 <!-- <h3>Filtro: {{filtroLista}}</h3> código mantigo por referência-->
 <table class="table table-striped">
     <thead class="table-dark text-center">
