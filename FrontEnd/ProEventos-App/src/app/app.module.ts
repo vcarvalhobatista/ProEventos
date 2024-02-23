@@ -23,6 +23,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TitleComponent } from 'src/shared/title/title.component';
+import { EventoDetalheComponent } from './components/eventos/evento-detalhe/evento-detalhe.component';
+import { EventoListaComponent } from './components/eventos/evento-lista/evento-lista.component';
+import { FooterComponent } from 'src/shared/footer/footer.component';
+
 
 
 @NgModule({
@@ -36,7 +40,10 @@ import { TitleComponent } from 'src/shared/title/title.component';
     ContatosComponent,
     PalestrantesComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    EventoDetalheComponent,
+    EventoListaComponent,
+    FooterComponent
    ],
   imports: [
     BrowserModule,
