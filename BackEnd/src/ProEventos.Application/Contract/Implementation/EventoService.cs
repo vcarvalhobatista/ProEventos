@@ -78,10 +78,10 @@ namespace ProEventos.Application.Contract.Implementation
             {
                 return await _eventoRepository.GetAllEventosAsync(includePalestrantes);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
 
-                throw new Exception("Não foi possível buscar os Eventos.");
+                throw new Exception("Não foi possível buscar os Eventos.", ex.InnerException);
             }
         }
 
@@ -95,7 +95,7 @@ namespace ProEventos.Application.Contract.Implementation
 
                 return evento;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("Houve falha na busca do Evento.", ex.InnerException);
             }
@@ -107,7 +107,7 @@ namespace ProEventos.Application.Contract.Implementation
             {
                 return await _eventoRepository.GetAllEventosByTemaAsync(tema, includePalestrantes) ?? throw new Exception("Eventos não encontrados.");
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("Houve falha na busca dos Eventos.", ex.InnerException);
             }
