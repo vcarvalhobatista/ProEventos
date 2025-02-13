@@ -13,23 +13,23 @@ namespace ProEventos.Implementation.Persistence
             _context = context;
 
         }
-        public void Add<T>(T entity) where T : class
+        public void Add(T entity)
         {
             _context.Add(entity);
         }
 
-        public void Delete<T>(T entity) where T : class
+        public void Delete(T entity)
         {
-            _context.Entry<T>(entity).State = EntityState.Deleted;
+            _context.Entry(entity).State = EntityState.Deleted;
             _context.Remove(entity);
         }
 
-        public void DeleteRange<T>(T[] entities) where T : class
+        public void DeleteRange(T[] entities)
         {
             _context.RemoveRange(entities);
         }
 
-        public void Update<T>(T entity) where T : class
+        public void Update(T entity)
         {            
             _context.Update(entity);
         }

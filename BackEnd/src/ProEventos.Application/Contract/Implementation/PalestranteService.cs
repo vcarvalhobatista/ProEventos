@@ -27,7 +27,7 @@ namespace ProEventos.Application.Contract.Implementation
             if (palestrante == null)
                 return null;
 
-            _repository.Update(palestrante);
+            _repository.Update(model);
             
             if(await _repository.SaveChangesAsync())
                 return await _palestranteRepository.GetAllPalestrantesByIdAsync(palestranteId, false);
@@ -41,7 +41,7 @@ namespace ProEventos.Application.Contract.Implementation
             if (palestrante == null)
                 return false;
 
-            _repository.Delete(palestrante);
+            _repository.Delete((Palestrante)palestrante);
             return await _repository.SaveChangesAsync();
         }
 

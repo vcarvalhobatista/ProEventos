@@ -18,7 +18,11 @@ namespace ProEventos.Domain
 
         public IEnumerable<RedeSocial>? RedesSociais { get; set; }
 
-        public IEnumerable<PalestranteEvento>? PalestrantesEventos { get; set; }        
+        public IEnumerable<PalestranteEvento>? PalestrantesEventos { get; set; }
 
+        public static explicit operator Palestrante(Task<Palestrante> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

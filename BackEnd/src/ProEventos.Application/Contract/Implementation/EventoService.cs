@@ -27,7 +27,6 @@ namespace ProEventos.Application.Contract.Implementation
             }
             catch (System.Exception ex)
             {
-
                 throw new Exception("Houve falha ao adicionar um novo Evento.", ex.InnerException);
             }
         }
@@ -41,7 +40,7 @@ namespace ProEventos.Application.Contract.Implementation
                 var evento = await _eventoRepository.GetAllEventosByIdAsync(eventoId, false);
                 if (evento == null) return null;
 
-                model.EventoId = eventoId;
+                model.EventoId = evento.EventoId;
 
                 _repository.Update(model);
 
@@ -62,7 +61,7 @@ namespace ProEventos.Application.Contract.Implementation
             {
                 var evento = await _eventoRepository.GetAllEventosByIdAsync(eventoId, false);
 
-                if(evento == null) return false;
+                if(evento == null) throw new Exception("O evento não foi encontrado.");
                 _repository.Delete(evento);
 
                 return await _repository.SaveChangesAsync();
